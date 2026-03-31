@@ -1,5 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+#include "Kismet/KismetSystemLibrary.h"
 #include "EntregasPracticasCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
@@ -152,7 +153,10 @@ void AEntregasPracticasCharacter::Interact()
 	CollisionParams.AddIgnoredActor(this); // Ignoramos al propio personaje para no chocar con nosotros mismos
 
 	// Lanzamos el rayo invisible para detectar qué tenemos enfrente
-	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, CollisionParams);
+	bool bHit = UKismetSystemLibrary::LineTraceSingle(
+		this, StartLocation, EndLocation, UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		false, TArray<AActor*>(), EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 2.0f
+	);
 
 	if (bHit)
 	{
