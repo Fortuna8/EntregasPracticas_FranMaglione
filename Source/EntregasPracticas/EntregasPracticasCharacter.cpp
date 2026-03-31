@@ -1,7 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "Kismet/KismetSystemLibrary.h"
 #include "EntregasPracticasCharacter.h"
+#include "FragmentComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
 #include "Camera/CameraComponent.h"
@@ -52,6 +53,9 @@ AEntregasPracticasCharacter::AEntregasPracticasCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	// Creamos el componente y lo asociamos al personaje
+	FragmentSystem = CreateDefaultSubobject<UFragmentComponent>(TEXT("FragmentSystem"));
 }
 
 void AEntregasPracticasCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

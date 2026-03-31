@@ -68,13 +68,17 @@ protected:
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-protected:
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+
+	// Nuestro nuevo sistema de inventario de fragmentos
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UFragmentComponent* FragmentSystem;
 
 public:
 
@@ -94,7 +98,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
 
-public:
 
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
