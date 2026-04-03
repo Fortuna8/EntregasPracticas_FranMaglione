@@ -80,6 +80,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	class UFragmentComponent* FragmentSystem;
 
+	// Componente para manejar la salud del jugador
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UHealthComponent* HealthSystem;
+
 public:
 
 	/** Handles move inputs from either controls or UI interfaces */

@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "EntregasPracticasCharacter.h"
+#include "HealthComponent.h"
 #include "FragmentComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Engine/LocalPlayer.h"
@@ -56,6 +57,9 @@ AEntregasPracticasCharacter::AEntregasPracticasCharacter()
 
 	// Creamos el componente y lo asociamos al personaje
 	FragmentSystem = CreateDefaultSubobject<UFragmentComponent>(TEXT("FragmentSystem"));
+
+	// Creamos el componente de salud
+	HealthSystem = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthSystem"));
 }
 
 void AEntregasPracticasCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
