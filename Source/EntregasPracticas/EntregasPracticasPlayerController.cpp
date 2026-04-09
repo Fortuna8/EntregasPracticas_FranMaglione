@@ -2,6 +2,9 @@
 
 
 #include "EntregasPracticasPlayerController.h"
+#include "HealthWidget.h"
+#include "EntregasPracticasCharacter.h"
+#include "HealthComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Engine/LocalPlayer.h"
 #include "InputMappingContext.h"
@@ -12,6 +15,30 @@
 void AEntregasPracticasPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+
+	// NETWORKING: La UI solo se crea si somos el controlador LOCAL
+	if (IsLocalController() && HealthWidgetClass)
+	{
+		HealthWidget = CreateWidget<UHealthWidget>(this, HealthWidgetClass);
+		if (HealthWidget)
+		{
+			HealthWidget->AddToViewport();
+		}
+
+		// Buscamos al personaje y su componente de vida para vincularnos
+		if (AEntregasPracticasCharacter* MyChar = Cast<AEntregasPracticasCharacter>(GetPawn()))
+		{
+			if (UHealthComponent* HealthComp = MyChar->FindComponentByClass<UHealthComponent>())
+			{
+				// Nos vinculamos al evento de cambio de vida
+				HealthComp->OnHealthChanged.AddDynamic(this, &AEntregasPracticasPlayerController::HandleHealthChanged);
+
+				// Inicializamos la barra con los valores actuales
+				HealthWidget->UpdateHealthBar(HealthComp->GetCurrentHealth(), HealthComp->GetMaxHealth());
+			}
+		}
+	}
 
 	// only spawn touch controls on local player controllers
 	if (SVirtualJoystick::ShouldDisplayTouchInterface() && IsLocalPlayerController())
@@ -30,6 +57,14 @@ void AEntregasPracticasPlayerController::BeginPlay()
 
 		}
 
+	}
+}
+
+void AEntregasPracticasPlayerController::HandleHealthChanged(float CurrentHealth, float MaxHealth)
+{
+	if (HealthWidget)
+	{
+		HealthWidget->UpdateHealthBar(CurrentHealth, MaxHealth);
 	}
 }
 

@@ -1,6 +1,6 @@
+#include "HealthModifier.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/PointLightComponent.h"
-#include "HealthModifier.h"
 #include "Components/BoxComponent.h"
 #include "HealthComponent.h" // Incluimos tu nuevo componente
 #include "TimerManager.h"    // Para manejar el tiempo en bucle

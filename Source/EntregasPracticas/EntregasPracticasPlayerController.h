@@ -38,6 +38,18 @@ protected:
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
 
+	// La clase del Widget que vamos a usar
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<class UHealthWidget> HealthWidgetClass;
+
+	// Referencia al widget ya creado
+	UPROPERTY()
+	UHealthWidget* HealthWidget;
+
+	// Función que se ejecutará cuando el delegado de vida avise un cambio
+	UFUNCTION()
+	void HandleHealthChanged(float CurrentHealth, float MaxHealth);
+
 	/** Input mapping context setup */
 	virtual void SetupInputComponent() override;
 
