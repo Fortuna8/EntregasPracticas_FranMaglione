@@ -21,7 +21,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  Implements a controllable orbiting camera
  */
 UCLASS(abstract)
-class AEntregasPracticasCharacter : public ACharacter
+class AEntregasPracticasCharacter : public ACharacter, public IInteractableInterface
 {
 	GENERATED_BODY()
 
@@ -55,8 +55,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InteractAction;
 
-	// Función que se llama al presionar la tecla E
+	
+	// INTERFACES
+	// Interact - Funcion que se llama al presionar la tecla E
 	void Interact();
+	// GetSkeletalMesh - Funcion que se llama el entrar en contacto con otros actores con la misma interfaz
+	virtual USkeletalMeshComponent* GetSkeletalMesh_Implementation() override;
 
 public:
 
@@ -108,5 +112,6 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	
 };
 

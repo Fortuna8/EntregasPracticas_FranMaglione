@@ -62,6 +62,7 @@ AEntregasPracticasCharacter::AEntregasPracticasCharacter()
 	HealthSystem = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthSystem"));
 }
 
+
 void AEntregasPracticasCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 
@@ -81,7 +82,7 @@ void AEntregasPracticasCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AEntregasPracticasCharacter::Look);
 
-		// Bindeo de la interacción
+		// Bindeo de la interacciï¿½n
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AEntregasPracticasCharacter::Interact);
 	}
 	else
@@ -152,7 +153,7 @@ void AEntregasPracticasCharacter::DoJumpEnd()
 
 void AEntregasPracticasCharacter::Interact()
 {
-	// Calculamos desde dónde y hacia dónde va el rayo (Line Trace)
+	// Calculamos desde dï¿½nde y hacia dï¿½nde va el rayo (Line Trace)
 	FVector StartLocation = GetActorLocation();
 	FVector EndLocation = StartLocation + (GetActorForwardVector() * 500.0f); // 500 unidades hacia adelante
 
@@ -160,7 +161,7 @@ void AEntregasPracticasCharacter::Interact()
 	FCollisionQueryParams CollisionParams;
 	CollisionParams.AddIgnoredActor(this); // Ignoramos al propio personaje para no chocar con nosotros mismos
 
-	// Lanzamos el rayo invisible para detectar qué tenemos enfrente
+	// Lanzamos el rayo invisible para detectar quï¿½ tenemos enfrente
 	bool bHit = UKismetSystemLibrary::LineTraceSingle(
 		this, StartLocation, EndLocation, UEngineTypes::ConvertToTraceType(ECC_Visibility),
 		false, TArray<AActor*>(), EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 2.0f
@@ -173,9 +174,14 @@ void AEntregasPracticasCharacter::Interact()
 		// Verificamos si el actor impactado implementa nuestra interfaz
 		if (HitActor && HitActor->Implements<UInteractableInterface>())
 		{
-			// Ejecutamos la función Interact de la interfaz. 
+			// Ejecutamos la funciï¿½n Interact de la interfaz. 
 			// Se usa Execute_Interact porque es un BlueprintNativeEvent.
 			IInteractableInterface::Execute_Interact(HitActor, this);
 		}
 	}
+}
+
+USkeletalMeshComponent* AEntregasPracticasCharacter::GetSkeletalMesh_Implementation()
+{
+	return GetSkeletalMesh();
 }
